@@ -1,6 +1,7 @@
 package dev.mashni.breaurora.rule;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,9 +41,14 @@ public class RuleService {
 
     }
 
+    @Transactional
+    public void delete(UUID id){
+        Rule existing = findById(id);
+        ruleRepository.delete(existing);
+    }
+
     public List<Rule> findActiveOrderedByPriority(){
         return ruleRepository.findByActiveTrueOrderByPriorityAsc();
     }
-
 
 }
