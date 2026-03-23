@@ -1,5 +1,6 @@
 package dev.mashni.breaurora.engine.dto;
 
+
 import java.util.List;
 
 public record EvaluationResult(

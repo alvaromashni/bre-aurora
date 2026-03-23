@@ -12,6 +12,7 @@ import java.util.UUID;
 @Table(name = "rules")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rule {
