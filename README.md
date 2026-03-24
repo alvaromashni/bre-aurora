@@ -1,10 +1,10 @@
-# Business Rule Engine — Motor de Regras de Negócio Configurável - BRE AURORA
+# Business Rule Engine — motor de regras de negócio configurável
 
 Motor de regras de negócio desenvolvido em Java com Spring Boot, capaz de avaliar condições dinâmicas contra eventos recebidos via API REST. As regras são armazenadas em banco de dados e interpretadas em tempo de execução, eliminando a necessidade de alterações no código a cada mudança de lógica de negócio.
 
 ---
 
-## Motivacao
+## Motivação
 
 Em sistemas tradicionais, regras de negócio como "bloquear transações acima de R$ 5.000" ficam hardcoded no código-fonte. Qualquer alteração exige modificação, revisão, testes e deploy — um ciclo que pode levar dias. Este projeto resolve esse problema separando dados de lógica: as regras vivem no banco e a engine as interpreta dinamicamente, permitindo que analistas alterem o comportamento do sistema sem intervenção de um desenvolvedor.
 
@@ -55,7 +55,7 @@ src/main/java/com/seuusuario/ruleengine/
 |-- config/        # Configuracoes globais (Swagger, ExceptionHandler)
 ```
 
-### Fluxo de execucao
+### Fluxo de execução
 
 ```
 POST /events/evaluate
@@ -100,7 +100,7 @@ public interface RuleEvaluator {
 
 A `RuleEngine` itera sobre as regras em ordem de prioridade. Cada regra e avaliada de forma independente — o resultado de uma nao interfere na avaliacao da proxima, salvo quando a acao e `BLOCK`.
 
-### Registry — mapeamento de acoes
+### Registry — mapeamento de ações
 
 O `ActionExecutorRegistry` mantem um `Map<String, ActionExecutor>` populado automaticamente pelo Spring a partir de todos os beans que implementam a interface `ActionExecutor`. Para adicionar um novo tipo de acao, basta criar um novo componente anotado com `@Component` — nenhum codigo existente precisa ser alterado.
 
@@ -113,9 +113,9 @@ public ActionExecutorRegistry(List<ActionExecutor> executorList) {
 
 ---
 
-## Seguranca
+## Segurança
 
-### Protecao contra SpEL Injection
+### Proteção contra SpEL Injection
 
 O Spring Expression Language (SpEL) e capaz de executar metodos Java arbitrarios se utilizado com `StandardEvaluationContext`. Uma expressao maliciosa armazenada no banco poderia executar comandos no servidor:
 
@@ -133,7 +133,7 @@ SimpleEvaluationContext.forReadOnlyDataBinding()
         .build();
 ```
 
-A cobertura de testes inclui um caso especifico que valida este comportamento:
+A cobertura de testes inclui um caso específico que valida este comportamento:
 
 ```java
 @Test
@@ -146,7 +146,7 @@ void deveBloquearSpelInjection() {
 
 ---
 
-## Estrutura das Regras
+## Estrutura das regras
 
 As regras são definidas em JSON e armazenadas no banco. A condição e uma expressão avaliada contra os dados do evento recebido.
 
@@ -171,9 +171,9 @@ As regras são definidas em JSON e armazenadas no banco. A condição e uma expr
 
 ---
 
-## Como Executar
+## Como executar
 
-### Pre-requisitos
+### Pré-requisitos
 
 - Java 21
 - Docker e Docker Compose
@@ -214,13 +214,13 @@ docker compose up -d
 ./mvnw spring-boot:run
 ```
 
-A aplicacao estara disponivel em `http://localhost:8080`.
+A aplicação estará disponível em `http://localhost:8080`.
 
-A documentacao interativa da API estara disponivel em `http://localhost:8080/swagger-ui/index.html`.
+A documentação interativa da API estara disponível em `http://localhost:8080/swagger-ui/index.html`.
 
 ---
 
-## Exemplos de Uso
+## Exemplos de uso
 
 ### Cadastrar uma regra
 
@@ -276,7 +276,7 @@ GET /audit/matched
 
 ## Testes
 
-O projeto possui cobertura completa com 34 testes distribuidos entre testes unitarios e de integracao.
+O projeto possui cobertura completa com 34 testes distribuídos entre testes unitários e de integração.
 
 ```bash
 ./mvnw test
@@ -296,7 +296,7 @@ O projeto possui cobertura completa com 34 testes distribuidos entre testes unit
 
 ---
 
-## Possiveis Evolucoes
+## Possíveis evoluções
 
 - Versionamento de regras com histórico de alterações
 - Interface web para gerenciamento de regras sem uso da API
